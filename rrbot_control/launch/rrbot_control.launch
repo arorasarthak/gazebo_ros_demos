@@ -9,10 +9,22 @@
 					  joint1_position_controller
 					  joint2_position_controller"/>
 
+
+
+  <!-- send fake joint values -->
+  <node name="joint_state_publisher" pkg="joint_state_publisher" type="joint_state_publisher">
+    <param name="use_gui" value="FALSE"/>
+    <remap from="/joint_states" to="/rrbot/joint_states" />
+  </node>
+
   <!-- convert joint states to TF transforms for rviz, etc -->
   <node name="robot_state_publisher" pkg="robot_state_publisher" type="robot_state_publisher"
 	respawn="false" output="screen">
     <remap from="/joint_states" to="/rrbot/joint_states" />
   </node>
+
+
+  <!-- Show in Rviz   -->
+  <node name="rviz" pkg="rviz" type="rviz" args="-d $(find rrbot_description)/launch/rrbot.rviz"/>
 
 </launch>
